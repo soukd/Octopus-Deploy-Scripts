@@ -36,10 +36,12 @@ function StopAndDisabledATask($StrTaskName)
     Write-Output "StrTaskName= $StrTaskName"
 
     # stop the task
-    Stop-ScheduledTask -TaskName $StrTaskName 
+    # Stop-ScheduledTask -TaskName $StrTaskName  
+    schtasks /End /TN $StrTaskName 
     
     # disable it
-    Disable-ScheduledTask -TaskName $StrTaskName 
+    # Disable-ScheduledTask -TaskName $StrTaskName 
+    schtasks /Change /TN $StrTaskName /DISABLE
 
 }
 
@@ -48,10 +50,13 @@ function EnabledandStartATask($StrTaskName)
     Write-Output "StrTaskName= $StrTaskName"
 
     # end task
-    Enable-ScheduledTask -TaskName $StrTaskName
+    # Enable-ScheduledTask -TaskName $StrTaskName
+    schtasks /Change /TN $StrTaskName /ENABLE
     
     # run it
-    Start-ScheduledTask  -TaskName $StrTaskName 
+    # Start-ScheduledTask  -TaskName $StrTaskName 
+    schtasks /Run /TN $StrTaskName 
+    
 }
 
 function DeployNewVersion($TaskName, $AgentName, $MitimesFolder, $BackupFolder, $NewUpdateFolder)
